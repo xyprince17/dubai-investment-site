@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Arabian Skyline Investment Ltd.</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #0b1c2c;
+    color: white;
+    padding: 20px;
+}
+.container {
+    max-width: 650px;
+    margin: auto;
+    background: #ffffff;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+}
+h2 {
+    text-align: center;
+    color: #0b1c2c;
+}
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    background: #caa64b;
+    color: black;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.success {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+}
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.header h1 {
+    margin: 0;
+    color: gold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+    <h1>Arabian Skyline Investment Ltd.</h1>
+    <p>Dubai International Financial Centre (DIFC), UAE</p>
+    <p>Global Real Estate Investment Platform</p>
+</div>
+
+<h2>Investor Registration (Global)</h2>
+
+<form id="form">
+<input type="text" id="name" placeholder="Full Name" required>
+<input type="email" id="email" placeholder="Email" required>
+<input type="text" id="phone" placeholder="Phone Number" required>
+<input type="text" id="country" placeholder="Country" required>
+
+<select id="plan">
+<option>Land Banking (25% - 40% ROI)</option>
+<option>Rental Investment (8% - 15% Annual ROI)</option>
+<option>Property Development (30% - 60% ROI)</option>
+</select>
+
+<input type="number" id="amount" placeholder="Investment Amount ($)" required>
+
+<select id="payment">
+<option>Pending</option>
+<option>Paid</option>
+</select>
+
+<button type="submit">Register Investor</button>
+</form>
+
+<div class="success" id="msg"></div>
+
+<button onclick="receipt()">Download Proof of Registration</button>
+
+</div>
+
+<script>
+let data = {};
+
+document.getElementById("form").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    data = {
+        name: name.value,
+        email: email.value,
+        phone: phone.value,
+        country: country.value,
+        plan: plan.value,
+        amount: amount.value,
+        payment: payment.value,
+        ref: "DUBAI-" + Math.floor(Math.random()*1000000),
+        date: new Date().toLocaleString()
+    };
+
+    msg.innerHTML = "✅ Registration Successful | Ref: " + data.ref;
+});
+
+function receipt(){
+    if(!data.name){
+        alert("Register first!");
+        return;
+    }
+
+    let win = window.open("");
+
+    win.document.write(`
+    <html>
+    <body style="font-family:Arial;">
+    
+    <h2>Arabian Skyline Investment Ltd.</h2>
+    <p><b>Dubai International Financial Centre (DIFC), UAE</b></p>
+    <hr>
+
+    <h3>INVESTOR REGISTRATION RECEIPT</h3>
+
+    <p><b>Reference:</b> ${data.ref}</p>
+    <p><b>Name:</b> ${data.name}</p>
+    <p><b>Email:</b> ${data.email}</p>
+    <p><b>Phone:</b> ${data.phone}</p>
+    <p><b>Country:</b> ${data.country}</p>
+
+    <p><b>Investment Plan:</b> ${data.plan}</p>
+    <p><b>Amount:</b> $${data.amount}</p>
+    <p><b>Payment Status:</b> ${data.payment}</p>
+
+    <p><b>Date:</b> ${data.date}</p>
+
+    <hr>
+
+    <p>✔ This confirms registration with Arabian Skyline Investment Ltd.</p>
+    <p>✔ ROI is based on selected investment plan.</p>
+
+    <button onclick="window.print()">Print / Save PDF</button>
+
+    </body>
+    </html>
+    `);
+}
+</script>
+
+</body>
+</html>
